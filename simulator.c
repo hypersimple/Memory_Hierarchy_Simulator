@@ -183,8 +183,12 @@ unsigned int get_a_pp(mapping *map)
             
             if (dc[i].valid) {
                 if (debug)
-                    printf("invalidating DC line with tag %x and index %x since phys page %x is being replaced\n", dc[i].tag, i / dc_set_size, min_unit);
-                fprintf(fp, "invalidating DC line with tag %x and index %x since phys page %x is being replaced\n", dc[i].tag, i / dc_set_size, min_unit);
+                    printf("invalidating DC line with tag %x and index %x "
+                           "since phys page %x is being replaced\n", 
+                           dc[i].tag, i / dc_set_size, min_unit);
+                fprintf(fp, "invalidating DC line with tag %x and index %x "
+                            "since phys page %x is being replaced\n", 
+                            dc[i].tag, i / dc_set_size, min_unit);
                 dc[i].valid = 0;
             }
         } 
@@ -213,9 +217,13 @@ unsigned int get_a_pp(mapping *map)
                 
                 if (l2[i].valid) {
                     if (debug)
-                        printf("invalidating L2 line with tag %x and index %x since phys page %x is being replaced\n", l2[i].tag, i / l2_set_size, min_unit);
+                        printf("invalidating L2 line with tag %x and index %x "
+                               "since phys page %x is being replaced\n", 
+                               l2[i].tag, i / l2_set_size, min_unit);
                         
-                    fprintf(fp, "invalidating L2 line with tag %x and index %x since phys page %x is being replaced\n", l2[i].tag, i / l2_set_size, min_unit);
+                    fprintf(fp, "invalidating L2 line with tag %x and index %x "
+                                "since phys page %x is being replaced\n", 
+                                l2[i].tag, i / l2_set_size, min_unit);
                     
                     l2[i].valid = 0;
                 }
@@ -441,7 +449,8 @@ access_dc(int r_w, unsigned int pa)
     for (i = 0; i < dc_set_size; i++) {
 
         // the hit situation
-        if (dc[dcc.index * dc_set_size + i].valid && dc[dcc.index * dc_set_size + i].tag == dcc.tag) {
+        if (dc[dcc.index * dc_set_size + i].valid 
+         && dc[dcc.index * dc_set_size + i].tag == dcc.tag) {
             hit = 1;
             
             is_dc_hit = 1;
@@ -597,7 +606,8 @@ access_dc(int r_w, unsigned int pa)
 }
 
 
-// the function to access L2 cache, the display variable control if the content should be printed to the stdout
+// the function to access L2 cache, the display variable control 
+// if the content should be printed to the stdout
 access_l2(int r_w, unsigned int pa, int display)  
 {
     int i,j,k;
@@ -616,7 +626,8 @@ access_l2(int r_w, unsigned int pa, int display)
     int hit = 0;
     for (i = 0; i < l2_set_size; i++) {
         // the hit situation
-        if (l2[l2c.index * l2_set_size + i].valid && l2[l2c.index * l2_set_size + i].tag == l2c.tag) {
+        if (l2[l2c.index * l2_set_size + i].valid 
+         && l2[l2c.index * l2_set_size + i].tag == l2c.tag) {
             hit = 1;
             
             if (display) {
@@ -821,7 +832,8 @@ unsigned int access_tlb(unsigned int vp, mapping *map)
     for (i = 0; i < tlb_set_size; i++) {
         //printf("%d\n",tlbc.index * tlb_set_size + i);
         // the hit situation
-        if (tlb[tlbc.index * tlb_set_size + i].valid && tlb[tlbc.index * tlb_set_size + i].tag == tlbc.tag) {
+        if (tlb[tlbc.index * tlb_set_size + i].valid 
+         && tlb[tlbc.index * tlb_set_size + i].tag == tlbc.tag) {
             hit = 1;
             strcpy(d_tlb_res, "hit");
             dtlb_hits++;
